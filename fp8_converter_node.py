@@ -2,9 +2,9 @@ import torch
 from safetensors import safe_open
 from safetensors.torch import save_file
 from tqdm.auto import tqdm
-from ..execution import EXE_PATH  # Adjust import as necessary
-from ..nodes import NODE_TYPE
-from ..node_helpers import InputModel, OutputModel
+from execution import EXE_PATH  # 変更: 相対インポートから絶対インポートに修正
+from nodes import NODE_TYPE
+from node_helpers import InputModel, OutputModel
 
 class FP8ConverterNode:
     @classmethod
@@ -25,12 +25,11 @@ class FP8ConverterNode:
 
     def convert_to_fp8(self, model, clip, vae=None):
         try:
-            # Assuming model is a path or similar identifier
             model_fp8, clip_fp8 = self.convert_model_to_fp8(model, clip)
             return model_fp8, clip_fp8
         except Exception as e:
             print(f"FP8変換中にエラーが発生しました: {str(e)}")
-            return model, clip  # Return original if failed
+            return model, clip
 
     def convert_model_to_fp8(self, model, clip):
         components = {"model": {}, "clip": {}, "vae": {}}
