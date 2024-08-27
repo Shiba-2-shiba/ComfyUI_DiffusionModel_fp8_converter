@@ -18,14 +18,23 @@ class FP8ConverterNode:
 
     def convert_to_fp8(self, model, clip):
         try:
-            # ModelPatcher 内のモデルを FP8 に変換
-            model_fp8 = model.model.to(torch.float8_e4m3fn) if hasattr(model, 'model') else model.to(torch.float8_e4m3fn)
-            
-            # CLIP のモデルを FP8 に変換
-            if hasattr(clip, 'cond_stage_model'):
-                clip_fp8 = clip.cond_stage_model.to(torch.float8_e4m3fn)
+            # モデルをFP8形式に変換
+            if hasattr(model, 'diffusion_model'):
+                model_fp8 = model.diffusion_model.to(torch.float8_e4m3fn)
             else:
-                raise AttributeError("CLIP オブジェクトに cond_stage_model 属性がありません")
+                model_fp8 = model.to(torch.float8_e4m3fn)
+            
+            # CLIPのモデルをFP8形式に変換
+            if isinstance(clip, SDXLClipModel):
+                clip_l_fp8 = clip.clip_l.to(torch.float8_e4m3fn)
+                clip_g_fp8 = clip.clip_g.to(torch.float8_e4m3fn)
+                
+                # 新しいSDXLClipModelオブジェクトを作成し、FP8のモデルを割り当てる
+                clip_fp8 = SDXLClipModel()
+                clip_fp8.clip_l = clip_l_fp8
+                clip_fp8.clip_g = clip_g_fp8
+            else:
+                raise AttributeError("CLIPオブジェクトがSDXLClipModelではありません")
 
             return (model_fp8, clip_fp8)
         except Exception as e:
