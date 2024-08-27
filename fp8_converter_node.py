@@ -1,5 +1,5 @@
 import torch
-from safetensors import safe_open, save_file
+from safetensors import safe_open
 from tqdm.auto import tqdm
 import torch.nn as nn
 
@@ -30,10 +30,11 @@ class FP8ConverterNode:
     def convert_module_to_fp8(self, module: nn.Module):
         # モジュールのすべてのパラメータとバッファをFP8形式に変換
         for name, param in module.named_parameters():
-            module.register_parameter(name, nn.Parameter(param.to(dtype=torch.float8_e4m3fn)))
+            with torch.no_grad():
+                param.copy_(param.to(dtype=torch.float8_e4m3fn))
 
         for name, buffer in module.named_buffers():
-            module.register_buffer(name, buffer.to(dtype=torch.float8_e4m3fn))
+            with torch.no_grad():
+                buffer.copy_(buffer.to(dtype=torch.float8_e4m3fn))
 
         return module
-
