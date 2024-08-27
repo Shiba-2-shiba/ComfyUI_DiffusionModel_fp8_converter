@@ -1,5 +1,4 @@
 import torch
-from safetensors import save_file
 from tqdm.auto import tqdm
 
 class FP8ConverterNode:
@@ -24,8 +23,8 @@ class FP8ConverterNode:
             clip_fp8 = self.convert_clip_to_fp8(clip)
 
             # 変換されたモデルを保存
-            self.save_fp8_model(model_fp8, "converted_model_fp8.safetensors")
-            self.save_fp8_model(clip_fp8, "converted_clip_fp8.safetensors")
+            self.save_fp8_model(model_fp8, "converted_model_fp8.pth")
+            self.save_fp8_model(clip_fp8, "converted_clip_fp8.pth")
 
             return model_fp8, clip_fp8
         except Exception as e:
@@ -63,5 +62,5 @@ class FP8ConverterNode:
     def save_fp8_model(self, model, filename):
         # モデルのstate_dictを保存
         state_dict = model.model_state_dict() if hasattr(model, 'model_state_dict') else model.cond_stage_model.state_dict()
-        save_file(state_dict, filename, metadata={"format": "pt"})
+        torch.save(state_dict, filename)
         print(f"FP8に変換されたモデルが保存されました: {filename}")
