@@ -1,8 +1,11 @@
 import torch
 import os
 
-# ComfyUIのmodel_patcher.pyからModelPatcherをインポート
+# 必要な場所からModelPatcherをインポート
 from comfy.model_patcher import ModelPatcher
+
+# SDXLClipModelを正しい場所からインポート
+from comfy.sdxl_clip import SDXLClipModel
 
 class FP8ConverterNode:
     @classmethod
