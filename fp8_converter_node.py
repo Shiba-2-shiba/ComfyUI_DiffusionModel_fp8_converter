@@ -43,7 +43,12 @@ class FP8ConverterNode:
                 clip_fp8.clip_l = clip_l_fp8
                 clip_fp8.clip_g = clip_g_fp8
             else:
-                raise AttributeError("CLIPオブジェクトがSDXLClipModelではありません")
+                # ここで型を確認し、それに応じた処理を行います
+                if hasattr(clip, 'to'):
+                    # `clip`が直接変換可能な場合
+                    clip_fp8 = clip.to(torch.float8_e4m3fn)
+                else:
+                    raise AttributeError("CLIPオブジェクトがSDXLClipModelまたは変換可能なオブジェクトではありません")
 
             return (model_fp8, clip_fp8)
         except Exception as e:
