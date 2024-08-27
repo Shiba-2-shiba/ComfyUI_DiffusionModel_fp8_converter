@@ -19,13 +19,13 @@ class FP8ConverterNode:
     def convert_to_fp8(self, model, clip):
         try:
             # モデルとCLIPをFP8形式に変換
-            model_fp8 = model.to(torch.float8_e4m3fn)
-            clip_fp8 = clip.to(torch.float8_e4m3fn)
+            model_fp8 = model.model.to(torch.float8_e4m3fn)  # ModelPatcher内のモデルをFP8に変換
+            clip_fp8 = clip.model.to(torch.float8_e4m3fn)  # 同様にCLIPのモデルもFP8に変換
             
             return (model_fp8, clip_fp8)
         except Exception as e:
             print(f"FP8への変換中にエラーが発生しました: {str(e)}")
-            return (model, clip)  # エラー時は元のデータを返す
+            return (model.model, clip.model)  # エラー時は元のデータを返す
 
 # ComfyUIのノードにこのクラスを登録するための定義
 NODE_CLASS_MAPPINGS = {
