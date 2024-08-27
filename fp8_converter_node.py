@@ -21,17 +21,17 @@ class FP8ConverterNode:
 
     def convert_to_fp8(self, model, clip):
         try:
-            # モデルをFP8形式に変換
+            # モデルをFP8形式に変換し、元の形式に戻す
             if hasattr(model, 'diffusion_model'):
-                model_fp8 = model.diffusion_model.to(torch.float8_e4m3fn)
+                model.diffusion_model = model.diffusion_model.to(torch.float8_e4m3fn)
+                return (model, clip)
             elif isinstance(model, ModelPatcher):
-                # ModelPatcherオブジェクトの場合は、内部モデルに対して処理を行う
-                model_fp8 = model.model.to(torch.float8_e4m3fn)
+                # ModelPatcherオブジェクトの場合
+                model.model = model.model.to(torch.float8_e4m3fn)
+                return (model, clip)
             else:
-                model_fp8 = model.to(torch.float8_e4m3fn)
-            
-            # CLIPの変換は行わず、そのまま返します
-            return (model_fp8, clip)
+                model = model.to(torch.float8_e4m3fn)
+                return (model, clip)
         except Exception as e:
             print(f"FP8への変換中にエラーが発生しました: {str(e)}")
             return (model, clip)  # エラー時は元のデータを返す
