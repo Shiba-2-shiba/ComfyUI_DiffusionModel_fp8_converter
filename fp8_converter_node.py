@@ -6,7 +6,7 @@ class FP8ConverterNode:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "model_patcher": ("MODEL",),
+                "model_patcher": ("MODEL",),  # Ensure these inputs are correctly linked in the UI
                 "clip_patcher": ("CLIP",),
             },
         }
@@ -15,7 +15,10 @@ class FP8ConverterNode:
     FUNCTION = "convert_to_fp8"
     CATEGORY = "Model Processing"
 
-    def convert_to_fp8(self, model_patcher, clip_patcher):
+    def convert_to_fp8(self, model_patcher=None, clip_patcher=None):
+        if model_patcher is None or clip_patcher is None:
+            raise ValueError("Both 'model_patcher' and 'clip_patcher' are required inputs.")
+
         try:
             # Convert model and clip to FP8
             model_fp8_state_dict = self.convert_patcher_to_fp8(model_patcher)
