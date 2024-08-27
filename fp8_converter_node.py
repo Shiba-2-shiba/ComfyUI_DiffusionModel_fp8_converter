@@ -1,87 +1,33 @@
 import torch
-from tqdm.auto import tqdm
+import os
 
 class FP8ConverterNode:
     @classmethod
-    def INPUT_TYPES(cls):
+    def INPUT_TYPES(s):
         return {
             "required": {
-                "model_patcher": ("MODEL",),  # Ensure these inputs are correctly linked in the UI
-                "clip_patcher": ("CLIP",),
-            },
+                "model": ("MODEL",),
+                "clip": ("CLIP",),
+            }
         }
 
-    RETURN_TYPES = ("MODEL", "CLIP",)
+    RETURN_TYPES = ("MODEL", "CLIP")
     FUNCTION = "convert_to_fp8"
-    CATEGORY = "Model Processing"
 
-    def convert_to_fp8(self, model_patcher=None, clip_patcher=None):
-        if model_patcher is None or clip_patcher is None:
-            raise ValueError("Both 'model_patcher' and 'clip_patcher' are required inputs.")
+    CATEGORY = "conversion"
 
+    def convert_to_fp8(self, model, clip):
         try:
-            # Convert model and clip to FP8
-            model_fp8_state_dict = self.convert_patcher_to_fp8(model_patcher)
-            clip_fp8_state_dict = self.convert_clip_to_fp8(clip_patcher)
-
-            # Save the converted models
-            self.save_fp8_model(model_fp8_state_dict, clip_fp8_state_dict, "converted_fp8_checkpoint.pth")
-
-            return model_patcher, clip_patcher
+            # モデルとCLIPをFP8形式に変換
+            model_fp8 = model.to(torch.float8_e4m3fn)
+            clip_fp8 = clip.to(torch.float8_e4m3fn)
+            
+            return (model_fp8, clip_fp8)
         except Exception as e:
-            print(f"FP8変換中にエラーが発生しました: {str(e)}")
-            return model_patcher, clip_patcher
+            print(f"FP8への変換中にエラーが発生しました: {str(e)}")
+            return (model, clip)  # エラー時は元のデータを返す
 
-    def convert_patcher_to_fp8(self, patcher):
-        try:
-            # ModelPatcherが管理するモデルのstate_dictを取得
-            model_state_dict = patcher.model.state_dict()
-
-            # すべてのパラメータとバッファをFP8形式に変換
-            for key, tensor in tqdm(model_state_dict.items(), desc="モデルパラメータをFP8に変換中"):
-                if tensor.dtype in [torch.float32, torch.float16]:
-                    model_state_dict[key] = tensor.to(dtype=torch.float8_e4m3fn)
-
-            # 変換されたstate_dictを返す
-            return model_state_dict
-        except Exception as e:
-            print(f"ModelPatcherのFP8変換中にエラーが発生しました: {str(e)}")
-            raise
-
-    def convert_clip_to_fp8(self, clip):
-        try:
-            # CLIPオブジェクトの内部モデルのstate_dictを取得
-            clip_state_dict = clip.cond_stage_model.state_dict()
-
-            # すべてのパラメータとバッファをFP8形式に変換
-            for key, tensor in tqdm(clip_state_dict.items(), desc="CLIPパラメータをFP8に変換中"):
-                if tensor.dtype in [torch.float32, torch.float16]:
-                    clip_state_dict[key] = tensor.to(dtype=torch.float8_e4m3fn)
-
-            # 変換されたstate_dictを返す
-            return clip_state_dict
-        except Exception as e:
-            print(f"CLIPのFP8変換中にエラーが発生しました: {str(e)}")
-            raise
-
-    def save_fp8_model(self, model_state_dict, clip_state_dict, output_path):
-        try:
-            # state_dictを結合して保存
-            combined_state_dict = {}
-            if model_state_dict:
-                combined_state_dict.update(model_state_dict)
-            if clip_state_dict:
-                combined_state_dict.update(clip_state_dict)
-
-            # 保存時にテンソルが連続するように調整
-            for key in combined_state_dict:
-                tensor = combined_state_dict[key]
-                if not tensor.is_contiguous():
-                    combined_state_dict[key] = tensor.contiguous()
-
-            # PyTorchのtorch.saveを使用してstate_dictを保存
-            torch.save(combined_state_dict, output_path)
-            print(f"FP8に変換されたチェックポイントが保存されました: {output_path}")
-        except Exception as e:
-            print(f"モデル保存中にエラーが発生しました: {str(e)}")
-            raise
+# ComfyUIのノードにこのクラスを登録するための定義
+NODE_CLASS_MAPPINGS = {
+    "FP8ConverterNode": FP8ConverterNode
+}
