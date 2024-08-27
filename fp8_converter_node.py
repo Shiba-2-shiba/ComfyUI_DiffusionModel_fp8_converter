@@ -1,7 +1,6 @@
 import torch
 from safetensors import safe_open
 from tqdm.auto import tqdm
-import torch.nn as nn
 
 class FP8ConverterNode:
     @classmethod
@@ -17,24 +16,27 @@ class FP8ConverterNode:
     FUNCTION = "convert_to_fp8"
     CATEGORY = "Model Processing"
 
-    def convert_to_fp8(self, model: nn.Module, clip: nn.Module):
+    def convert_to_fp8(self, model, clip):
         try:
-            # モデルとクリップをFP8に変換
-            model_fp8 = self.convert_module_to_fp8(model)
-            clip_fp8 = self.convert_module_to_fp8(clip)
+            # ModelPatcher対応: パラメータの取得とFP8変換の適用
+            model_fp8 = self.convert_patcher_to_fp8(model)
+            clip_fp8 = self.convert_patcher_to_fp8(clip)
             return model_fp8, clip_fp8
         except Exception as e:
             print(f"FP8変換中にエラーが発生しました: {str(e)}")
-            return model, clip  # エラー発生時は元のモデルとクリップを返す
+            return model, clip
 
-    def convert_module_to_fp8(self, module: nn.Module):
-        # モジュールのすべてのパラメータとバッファをFP8形式に変換
-        for name, param in module.named_parameters():
-            with torch.no_grad():
-                param.copy_(param.to(dtype=torch.float8_e4m3fn))
+    def convert_patcher_to_fp8(self, patcher):
+        # ModelPatcher内のパラメータを取得してFP8変換を適用する
+        if hasattr(patcher, 'model_state_dict'):
+            state_dict = patcher.model_state_dict()
 
-        for name, buffer in module.named_buffers():
-            with torch.no_grad():
-                buffer.copy_(buffer.to(dtype=torch.float8_e4m3fn))
+            for key, tensor in state_dict.items():
+                if tensor.dtype in [torch.float32, torch.float16]:
+                    with torch.no_grad():
+                        state_dict[key].copy_(tensor.to(dtype=torch.float8_e4m3fn))
 
-        return module
+            # 変換後のstate_dictをModelPatcherに再適用する
+            patcher.load()  # パラメータを反映するためにロードを再度呼び出す
+
+        return patcher
