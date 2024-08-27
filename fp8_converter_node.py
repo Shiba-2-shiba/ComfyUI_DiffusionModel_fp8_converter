@@ -21,6 +21,9 @@ class FP8ConverterNode:
             # モデルをFP8形式に変換
             if hasattr(model, 'diffusion_model'):
                 model_fp8 = model.diffusion_model.to(torch.float8_e4m3fn)
+            elif isinstance(model, ModelPatcher):
+                # ModelPatcherオブジェクトの場合は、内部モデルに対して処理を行う
+                model_fp8 = model.patch_model.to(torch.float8_e4m3fn)  # 内部の適切な属性を指定
             else:
                 model_fp8 = model.to(torch.float8_e4m3fn)
             
