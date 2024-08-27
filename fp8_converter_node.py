@@ -10,7 +10,7 @@ class FP8ConverterNode:
         return {
             "required": {
                 "model": ("MODEL",),
-                "clip": ("CLIP",),  # ここはそのままにしておきますが、変換は行いません
+                "clip": ("CLIP",),
             }
         }
 
@@ -26,7 +26,7 @@ class FP8ConverterNode:
                 model_fp8 = model.diffusion_model.to(torch.float8_e4m3fn)
             elif isinstance(model, ModelPatcher):
                 # ModelPatcherオブジェクトの場合は、内部モデルに対して処理を行う
-                model_fp8 = model.model.to(torch.float8_e4m3fn)  # 内部の適切な属性を指定
+                model_fp8 = model.model.to(torch.float8_e4m3fn)
             else:
                 model_fp8 = model.to(torch.float8_e4m3fn)
             
