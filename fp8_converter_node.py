@@ -4,16 +4,13 @@ import os
 # 必要な場所からModelPatcherをインポート
 from comfy.model_patcher import ModelPatcher
 
-# SDXLClipModelを正しい場所からインポート
-from comfy.sdxl_clip import SDXLClipModel
-
 class FP8ConverterNode:
     @classmethod
     def INPUT_TYPES(s):
         return {
             "required": {
                 "model": ("MODEL",),
-                "clip": ("CLIP",),
+                "clip": ("CLIP",),  # ここはそのままにしておきますが、変換は行いません
             }
         }
 
@@ -33,24 +30,8 @@ class FP8ConverterNode:
             else:
                 model_fp8 = model.to(torch.float8_e4m3fn)
             
-            # CLIPのモデルをFP8形式に変換
-            if isinstance(clip, SDXLClipModel):
-                clip_l_fp8 = clip.clip_l.to(torch.float8_e4m3fn)
-                clip_g_fp8 = clip.clip_g.to(torch.float8_e4m3fn)
-                
-                # 新しいSDXLClipModelオブジェクトを作成し、FP8のモデルを割り当てる
-                clip_fp8 = SDXLClipModel()
-                clip_fp8.clip_l = clip_l_fp8
-                clip_fp8.clip_g = clip_g_fp8
-            else:
-                # ここで型を確認し、それに応じた処理を行います
-                if hasattr(clip, 'to'):
-                    # `clip`が直接変換可能な場合
-                    clip_fp8 = clip.to(torch.float8_e4m3fn)
-                else:
-                    raise AttributeError("CLIPオブジェクトがSDXLClipModelまたは変換可能なオブジェクトではありません")
-
-            return (model_fp8, clip_fp8)
+            # CLIPの変換は行わず、そのまま返します
+            return (model_fp8, clip)
         except Exception as e:
             print(f"FP8への変換中にエラーが発生しました: {str(e)}")
             return (model, clip)  # エラー時は元のデータを返す
