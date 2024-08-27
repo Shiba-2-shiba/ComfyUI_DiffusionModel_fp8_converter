@@ -15,15 +15,15 @@ class FP8ConverterNode:
     FUNCTION = "convert_to_fp8"
     CATEGORY = "Model Processing"
 
-    def convert_to_fp8(self, model_patcher, clip_patcher):
+    def convert_to_fp8(self, model, clip):
         try:
             # ModelPatcherオブジェクトを使用してモデルとクリップをFP8に変換
-            model_fp8 = self.convert_patcher_to_fp8(model_patcher)
-            clip_fp8 = self.convert_patcher_to_fp8(clip_patcher)
+            model_fp8 = self.convert_patcher_to_fp8(model)
+            clip_fp8 = self.convert_patcher_to_fp8(clip)
             return model_fp8, clip_fp8
         except Exception as e:
             print(f"FP8変換中にエラーが発生しました: {str(e)}")
-            return model_patcher, clip_patcher
+            return model, clip
 
     def convert_patcher_to_fp8(self, patcher):
         # ModelPatcherが管理するモデルのstate_dictを取得
