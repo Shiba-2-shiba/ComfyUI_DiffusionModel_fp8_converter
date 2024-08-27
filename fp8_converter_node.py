@@ -6,8 +6,8 @@ class FP8ConverterNode:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "model": ("MODEL",),
-                "clip": ("CLIP",),
+                "model_patcher": ("MODEL",),
+                "clip_patcher": ("CLIP",),
             },
         }
 
@@ -17,12 +17,11 @@ class FP8ConverterNode:
 
     def convert_to_fp8(self, model_patcher, clip_patcher):
         try:
-            # MODELに対してFP8変換を適用
+            # Convert model and clip to FP8
             model_fp8_state_dict = self.convert_patcher_to_fp8(model_patcher)
-            # CLIPに対してFP8変換を適用
             clip_fp8_state_dict = self.convert_clip_to_fp8(clip_patcher)
 
-            # 変換されたモデルを保存
+            # Save the converted models
             self.save_fp8_model(model_fp8_state_dict, clip_fp8_state_dict, "converted_fp8_checkpoint.pth")
 
             return model_patcher, clip_patcher
