@@ -21,6 +21,16 @@ class FP8ConverterNode:
             # ModelPatcher対応: パラメータの取得とFP8変換の適用
             model_fp8 = self.convert_patcher_to_fp8(model)
             clip_fp8 = self.convert_patcher_to_fp8(clip)
+
+            # テスト: 変換後のdtypeを確認
+            print("Model Parameters after FP8 conversion:")
+            for name, param in model_fp8.model.named_parameters():
+                print(f"Param: {name}, Dtype: {param.dtype}")
+            
+            print("Clip Parameters after FP8 conversion:")
+            for name, param in clip_fp8.model.named_parameters():
+                print(f"Param: {name}, Dtype: {param.dtype}")
+
             return model_fp8, clip_fp8
         except Exception as e:
             print(f"FP8変換中にエラーが発生しました: {str(e)}")
