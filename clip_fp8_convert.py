@@ -16,15 +16,23 @@ class ClipFP8ConverterNode:
 
     def convert_clip_to_fp8(self, clip):
         try:
-            # CLIPモデルの型を確認して出力
+            # CLIPオブジェクトのタイプと属性を出力して調査
             print(f"CLIP model type: {type(clip)}")
+            print(f"CLIP attributes: {dir(clip)}")
 
-            # CLIPモデルを float8_e4m3fn 形式に変換する
-            if isinstance(clip, torch.Tensor):
-                clip = clip.to(torch.float8_e4m3fn)
+            # CLIPオブジェクト内部の変換可能な属性を変換する
+            if hasattr(clip, 'model'):
+                # ここで、内部のモデルを変換
+                clip.model = clip.model.to(torch.float8_e4m3fn)
+                print("CLIPモデルをfloat8_e4m3fnに変換しました。")
             else:
-                print("CLIPモデルはtorch.Tensorではないため、float8_e4m3fnへの変換がサポートされていません。")
+                print("CLIPモデルには変換可能な 'model' 属性がありません。")
             return (clip,)
         except Exception as e:
             print(f"CLIPモデルのfloat8_e4m3fnへの変換中にエラーが発生しました: {str(e)}")
             return (clip,)  # エラー時は元のデータを返す
+
+# ComfyUIのノードにこのクラスを登録するための定義
+NODE_CLASS_MAPPINGS = {
+    "ClipFP8ConverterNode": ClipFP8ConverterNode
+}
