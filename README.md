@@ -1,14 +1,18 @@
 # ComfyUI_ModelsClips_fp8_converter
 
 
-これは、ComfyUIで、Diffusionモデル部分のみをfp8に変換するカスタムノードです。
-CLIPとVAEは対応していません。
-利点としては、unetなどに分ける必要がないところです。
+ComfyUIで、Diffusionモデル部分のみをfp8に変換するカスタムノードです。
+
+CLIPとVAEのfp8変換については対応していません。
+
+このノード利点としては、fp8変換時にあらかじめunet/clip/vaeなどに分ける必要がなく、ComfyUIが出している、あらかじめ1つにまとめてあるsafetenrosファイルを使用できる点です。
 
 
-This is a custom node in ComfyUI that converts only the Diffusion model portion to fp8.
-CLIP and VAE are not supported.
-The advantage is that it does not need to be separated into unet etc.
+This is a custom node to convert only the Diffusion model part to fp8 in ComfyUI.
+
+CLIP and VAE fp8 conversion is not supported.
+
+The advantage of this node is that you do not need to separate unet/clip/vae in advance when converting to fp8, but can use the safetenros files that ComfyUI provides.
 
 
 ## Usage
@@ -26,8 +30,12 @@ CLIP is not converted, but is entered as a specification.
 
 SDXL・Auraflow・HunyuanDITのsafetensorsファイルをf8変換してファイルサイズの圧縮を確認しました。
 
+変換したチェックポイントは、通常の画像生成フローで使用してもエラーの発生なく使用出来ています。
+
 
 I have converted SDXL, Auraflow, and HunyuanDIT safetensors files to f8 and verified the file size compression.
+
+The checkpoints can be used in the normal image generation flow without any errors.
 
 ＜変換によるサイズの変化＞
 
