@@ -1,15 +1,14 @@
 # ComfyUI_ModelsClips_fp8_converter
-A custom ComfyUI node for models/clips fp8 converter
-png画像をカラーのアスキーアート化するカスタムノードです。
-以下に記載がありますが、複数のフォントサイズが使用される仕様になっています。
-生成されるファイルの解像度は入力画像と同じになるように設定しています。
+これは、ComfyUIで、Diffusionモデル部分のみをfp8に変換するカスタムノードです。
+CLIPとVAEは対応していません。
+利点としては、unetなどに分ける必要がないところです。
 
-## Installation
-ComfyUIのカスタムノードディレクトリにインストールします。
+## Usage
+以下のように間にノードをはさんで使用します。CLIPは変換しないのですが、仕様として入力します。
+![Example Workflow](https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_converter/blob/main/workflowexample.png)
 
-## Installation
-ComfyUIのカスタムノードディレクトリにインストールします。
-## Installation
-ComfyUIのカスタムノードディレクトリにインストールします。
+## Install
+以下のコマンドでインストール出来ます。
 
-## Installation
+
+
