@@ -4,7 +4,7 @@ import os
 # 必要な場所からModelPatcherをインポート
 from comfy.model_patcher import ModelPatcher
 
-class FP8ConverterNode:
+class ModelFP8ConverterNode:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -37,5 +37,5 @@ class FP8ConverterNode:
 
 # ComfyUIのノードにこのクラスを登録するための定義
 NODE_CLASS_MAPPINGS = {
-    "FP8ConverterNode": FP8ConverterNode
+    "ModelFP8ConverterNode": ModelFP8ConverterNode
 }
