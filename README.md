@@ -29,6 +29,20 @@ SDXL・Auraflow・HunyuanDITのsafetensorsファイルをf8変換してファイ
 
 I have converted SDXL, Auraflow, and HunyuanDIT safetensors files to f8 and verified the file size compression.
 
+＜変換によるサイズの変化＞
+
+①  SDXL        
+
+6.6GB    ⇒    4.1GB
+
+②  Auraflow    
+
+16GB     ⇒    8.9GB
+
+③  HunyanDiT　
+
+7.7GB　⇒    5.4GB
+
 ## Install
 
 
