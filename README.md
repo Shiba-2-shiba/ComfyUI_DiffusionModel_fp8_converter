@@ -23,7 +23,7 @@ The advantage of this node is that you do not need to separate unet/clip/vae in 
 CLIP is not converted, but is entered as a specification.
 
 
-![Example Workflow](https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_converter/blob/main/workflowexample.png)
+![Example Workflow](https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_converter/blob/main/model_convert_example.png)
 
 ## Checkpoint
 
