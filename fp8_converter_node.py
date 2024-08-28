@@ -10,31 +10,30 @@ class FP8ConverterNode:
         return {
             "required": {
                 "model": ("MODEL",),
-                "clip": ("CLIP",),
             }
         }
 
-    RETURN_TYPES = ("MODEL", "CLIP")
+    RETURN_TYPES = ("MODEL",)
     FUNCTION = "convert_to_fp8"
 
     CATEGORY = "conversion"
 
-    def convert_to_fp8(self, model, clip):
+    def convert_to_fp8(self, model):
         try:
-            # モデルをFP8形式に変換し、元の形式に戻す
+            # モデルを float8_e4m3fn 形式に変換
             if hasattr(model, 'diffusion_model'):
                 model.diffusion_model = model.diffusion_model.to(torch.float8_e4m3fn)
-                return (model, clip)
+                return (model,)
             elif isinstance(model, ModelPatcher):
                 # ModelPatcherオブジェクトの場合
                 model.model = model.model.to(torch.float8_e4m3fn)
-                return (model, clip)
+                return (model,)
             else:
                 model = model.to(torch.float8_e4m3fn)
-                return (model, clip)
+                return (model,)
         except Exception as e:
-            print(f"FP8への変換中にエラーが発生しました: {str(e)}")
-            return (model, clip)  # エラー時は元のデータを返す
+            print(f"float8_e4m3fn への変換中にエラーが発生しました: {str(e)}")
+            return (model,)  # エラー時は元のデータを返す
 
 # ComfyUIのノードにこのクラスを登録するための定義
 NODE_CLASS_MAPPINGS = {
