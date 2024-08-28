@@ -1,4 +1,4 @@
-from .fp8_converter_node import FP8ConverterNode
+from .model_fp8_converter import FP8ConverterNode
 
 # ノードクラスのマッピングを設定
 NODE_CLASS_MAPPINGS = {
