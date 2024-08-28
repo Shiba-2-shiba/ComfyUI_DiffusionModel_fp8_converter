@@ -1,4 +1,4 @@
-# ComfyUI_ModelsClips_fp8_converter
+# ComfyUI_DiffusionModel_fp8_converter
 
 
 ComfyUIで、Diffusionモデル部分のみをfp8に変換するカスタムノードです。
