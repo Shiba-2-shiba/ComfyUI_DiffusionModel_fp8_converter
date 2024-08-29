@@ -1,16 +1,16 @@
 # ComfyUI_DiffusionModel_fp8_converter
 
 
-ComfyUIで、Diffusionモデル部分のみをfp8に変換するカスタムノードです。
+ComfyUIで、Diffusionモデル部分のみ/CLIPモデルのみをfp8に変換するカスタムノードです。
 
-CLIPとVAEのfp8変換については対応していません。
+VAEのfp8変換については対応していません。
 
 このノード利点としては、fp8変換時にあらかじめunet/clip/vaeなどに分ける必要がなく、ComfyUIが出している、あらかじめ1つにまとめてあるsafetenrosファイルを使用できる点です。
 
 
-This is a custom node to convert only the Diffusion model part to fp8 in ComfyUI.
+This is a custom node to convert only the Diffusion model part or CLIP model part to fp8 in ComfyUI.
 
-CLIP and VAE fp8 conversion is not supported.
+VAE fp8 conversion is not supported.
 
 The advantage of this node is that you do not need to separate unet/clip/vae in advance when converting to fp8, but can use the safetenros files that ComfyUI provides.
 
@@ -18,7 +18,7 @@ The advantage of this node is that you do not need to separate unet/clip/vae in 
 ## Usage
 
 
-以下のように間にノードをはさんで使用します。CLIPは変換しないのですが、仕様として入力します。
+以下のように間にノードをはさんで使用します。
 
 CLIP is not converted, but is entered as a specification.
 
