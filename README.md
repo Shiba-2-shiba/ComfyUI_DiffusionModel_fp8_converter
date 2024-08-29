@@ -25,6 +25,14 @@ CLIP is not converted, but is entered as a specification.
 
 ![Example Workflow](https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_converter/blob/main/model_convert_example.png)
 
+
+２つのノードを同時に使用することも可能です。
+
+
+![Example Workflow](https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_converter/blob/main/workflowexample2.png)
+
+
+
 ## Checkpoint
 
 
