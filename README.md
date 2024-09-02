@@ -75,9 +75,11 @@ git clone https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_converter.
 
 ## Reference Script
 
+fp8化について、以下のサイトで公開しているスクリプトを参考にしています。
+
 This project references a main script from the following source:
 
 Source URL: https://note.com/den2_nova/n/n073adc24eb40
 
 
-Please note that this script is used under the assumption that it is publicly available without licensing restrictions. If there are any concerns or issues regarding the usage of this script, please feel free to contact us.
+This script is used under the assumption that it is publicly available without licensing restrictions. If there are any concerns or issues regarding the usage of this script, please feel free to contact us.
