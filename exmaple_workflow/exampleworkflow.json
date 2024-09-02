@@ -1,0 +1,336 @@
+{
+  "last_node_id": 12,
+  "last_link_id": 17,
+  "nodes": [
+    {
+      "id": 2,
+      "type": "CheckpointLoaderSimple",
+      "pos": {
+        "0": 519,
+        "1": 383,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": [
+        210,
+        98
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            12
+          ],
+          "slot_index": 0,
+          "shape": 3
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            13
+          ],
+          "slot_index": 1,
+          "shape": 3
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [],
+          "slot_index": 2,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "wai-cute-v5-sdxl.safetensors"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "ModelFP8ConverterNode",
+      "pos": {
+        "0": 822,
+        "1": 372,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": [
+        195,
+        26
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            14,
+            16
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelFP8ConverterNode"
+      }
+    },
+    {
+      "id": 9,
+      "type": "ClipFP8ConverterNode",
+      "pos": {
+        "0": 826,
+        "1": 458,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": [
+        185,
+        26
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            15,
+            17
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ClipFP8ConverterNode"
+      }
+    },
+    {
+      "id": 10,
+      "type": "ModelSave",
+      "pos": {
+        "0": 1075,
+        "1": 326,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": [
+        234,
+        58
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 14
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "ModelSave"
+      },
+      "widgets_values": [
+        "diffusion_models/ComfyUI"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "CLIPSave",
+      "pos": {
+        "0": 1086,
+        "1": 431,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 15
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "CLIPSave"
+      },
+      "widgets_values": [
+        "clip/ComfyUI"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "CheckpointSave",
+      "pos": {
+        "0": 1095,
+        "1": 544,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": [
+        212,
+        98
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 16
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 17
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "CheckpointSave"
+      },
+      "widgets_values": [
+        "checkpoints/ComfyUI"
+      ]
+    }
+  ],
+  "links": [
+    [
+      12,
+      2,
+      0,
+      8,
+      0,
+      "MODEL"
+    ],
+    [
+      13,
+      2,
+      1,
+      9,
+      0,
+      "CLIP"
+    ],
+    [
+      14,
+      8,
+      0,
+      10,
+      0,
+      "MODEL"
+    ],
+    [
+      15,
+      9,
+      0,
+      11,
+      0,
+      "CLIP"
+    ],
+    [
+      16,
+      8,
+      0,
+      12,
+      0,
+      "MODEL"
+    ],
+    [
+      17,
+      9,
+      0,
+      12,
+      1,
+      "CLIP"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1,
+      "offset": {
+        "0": 0,
+        "1": 0
+      }
+    }
+  },
+  "version": 0.4
+}
