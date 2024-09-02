@@ -55,7 +55,7 @@ The checkpoints can be used in the normal image generation flow without any erro
 
 ③  HunyanDiT　
 
-7.7GB　⇒    5.4GB
+7.7GB　⇒    3.5GB
 
 ## Install
 
