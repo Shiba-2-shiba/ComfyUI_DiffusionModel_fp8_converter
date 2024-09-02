@@ -1,0 +1,7 @@
+{
+  "name": "ComfyUI_DiffusionModel_fp8_converter",
+  "author": "Shiba-2-shiba",
+  "description": "This is a custom node to convert only the Diffusion model part or CLIP model part to fp8 in ComfyUI",
+  "url": "https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_converter",
+  "version": "1.0.0"
+}
