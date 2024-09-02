@@ -20,16 +20,14 @@ The advantage of this node is that you do not need to separate unet/clip/vae in 
 
 以下のように間にノードをはさんで使用します。
 
+
+
 CLIP is not converted, but is entered as a specification.
 
 
-![Example Workflow](https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_converter/blob/main/model_convert_example.png)
 
+![Example Workflow](https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_converter/blob/main/refimage/exampleworkflow.png)
 
-２つのノードを同時に使用することも可能です。
-
-
-![Example Workflow](https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_converter/blob/main/workflowexample2.png)
 
 
 
