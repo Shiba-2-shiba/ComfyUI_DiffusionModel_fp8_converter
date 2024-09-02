@@ -43,15 +43,15 @@ I have converted SDXL, Auraflow, and HunyuanDIT safetensors files to f8 and veri
 
 The checkpoints can be used in the normal image generation flow without any errors.
 
-＜変換によるサイズの変化＞
+＜変換によるサイズの変化：DiffusionモデルとCLIPをfp8にした場合＞
 
 ①  SDXL        
 
-6.6GB    ⇒    4.1GB
+6.5GB    ⇒    3.4GB
 
 ②  Auraflow    
 
-16GB     ⇒    8.9GB
+16GB     ⇒    7.7GB
 
 ③  HunyanDiT　
 
