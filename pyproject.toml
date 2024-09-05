@@ -1,0 +1,14 @@
+[project]
+name = "comfyui_diffusionmodel_fp8_converter"
+description = "This is a custom node to convert only the Diffusion model part or CLIP model part to fp8 in ComfyUI.\nVAE fp8 conversion is not supported.\nThe advantage of this node is that you do not need to separate unet/clip/vae in advance when converting to fp8, but can use the safetenros files that ComfyUI provides."
+version = "1.0.0"
+license = {file = "LICENSE"}
+
+[project.urls]
+Repository = "https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_converter"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = "shiba2shiba"
+DisplayName = "ComfyUI_DiffusionModel_fp8_converter"
+Icon = ""
