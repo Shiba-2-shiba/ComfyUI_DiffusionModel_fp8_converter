@@ -9,6 +9,6 @@ Repository = "https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_conver
 #  Used by Comfy Registry https://comfyregistry.org
 
 [tool.comfy]
-PublisherId = ""
+PublisherId = "shiba2shiba"
 DisplayName = "ComfyUI_DiffusionModel_fp8_converter"
 Icon = ""
