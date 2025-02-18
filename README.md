@@ -22,8 +22,6 @@ The advantage of this node is that you do not need to separate unet/clip/vae in 
 
 
 
-CLIP is not converted, but is entered as a specification.
-
 
 
 ![Example Workflow](https://github.com/Shiba-2-shiba/ComfyUI_DiffusionModel_fp8_converter/blob/main/refimage/exampleworkflow.png)
@@ -56,6 +54,10 @@ The checkpoints can be used in the normal image generation flow without any erro
 ③  HunyanDiT　
 
 7.7GB　⇒    3.5GB
+
+＜CLIPモデルについて＞
+
+T5xxlモデルのCLIPはfp8に変換できました。参考まで。
 
 ## Install
 
